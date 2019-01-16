@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import DeckList from './components/DeckList'
 import DeckView from './components/DeckView'
 import AddDeck from './components/AddDeck'
@@ -15,6 +15,13 @@ import { setLocalNotification } from './utils/helpers'
 import middleware from './middleware';
 import { createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 
+function UdaciStatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 const RouteConfigs = {
   DeckList: {
     screen: DeckList,
@@ -38,16 +45,21 @@ const RouteConfigs = {
 };
 
 const TabNavigatorConfig = {
+    navigationOptions: {
+      header: Platform.OS === 'ios' ? <UdaciStatusBar backgroundColor={blue} barStyle="light-content" /> : null,
+    },
   tabBarOptions: {
     activeTintColor: Platform.OS === "ios" ? blue : white,
     style: {
-      height: 56,
+      height: 66,
       backgroundColor: Platform.OS === "ios" ? white : blue,
       shadowColor: "rgba(0, 0, 0, 0.24)",
       shadowOffset: {
         width: 0,
         height: 3
       },
+      paddingTop: 10,
+      paddingBottom: 10,
       shadowRadius: 6,
       shadowOpacity: 1
     }
@@ -61,7 +73,7 @@ const Tabs =
 
 const MainNavigator = createStackNavigator({
   Home: {
-    screen: Tabs,
+    screen: Tabs
   },
   DeckView: {
     screen: DeckView,

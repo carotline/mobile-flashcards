@@ -29,7 +29,6 @@ function setData () {
   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
 
   return decks
-
 }
 
 export function deckResults (results) {

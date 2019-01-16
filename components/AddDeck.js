@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { white, gray } from '../utils/colors'
 import { handleAddDeck } from '../actions/index'
 import { createDeck } from '../utils/helpers'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Platform } from 'react-native'
 import StandardBtn from './StandardBtn';
 import { NavigationActions } from 'react-navigation';
 
@@ -52,7 +52,7 @@ class AddDeck extends Component {
           placeholder="Enter Title"
           onChangeText={(title) => this.setState({title})}
           value={title}
-          style={styles.inputText}
+          style={Platform.OS === 'ios' ? styles.inputTextOs : styles.inputText}
         />
         <StandardBtn onPress={this.handleSubmit} >SUBMIT</StandardBtn>
       </View>
@@ -68,13 +68,25 @@ const styles = StyleSheet.create({
     fontSize: 25,
     padding: 15
   },
-  inputText: {
+  inputTextOs: {
     borderColor: gray,
     padding: 10,
     borderRadius: 7,
     height: 45,
     marginLeft: 40,
     marginRight: 40,
+    fontSize: 22,
+    borderWidth: 1,
+    backgroundColor: white,
+    marginBottom: 20
+  },
+  inputText: {
+    borderColor: gray,
+    padding: 10,
+    borderRadius: 2,
+    height: 45,
+    marginLeft: 10,
+    marginRight: 10,
     fontSize: 22,
     borderWidth: 1,
     backgroundColor: white,
